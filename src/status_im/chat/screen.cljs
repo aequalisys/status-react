@@ -28,10 +28,12 @@
             [status-im.chat.views.bottom-info :refer [bottom-info-view]]
             [status-im.chat.views.toolbar-content :refer [toolbar-content-view]]
             [status-im.chat.views.suggestions :refer [suggestion-container]]
+            [status-im.chat.constants :as const]
             [status-im.i18n :refer [label label-pluralize]]
             [status-im.components.animation :as anim]
             [status-im.components.sync-state.offline :refer [offline-view]]
-            [status-im.constants :refer [content-type-status]]))
+            [status-im.constants :refer [content-type-status]]
+            [taoensso.timbre :as log]))
 
 (defn contacts-by-identity [contacts]
   (->> contacts
@@ -121,7 +123,7 @@
 (defn get-intro-status-message [all-messages]
   (let [{:keys [timestamp content-type]} (last all-messages)]
     (when (not= content-type content-type-status)
-      {:message-id   "intro-status"
+      {:message-id   const/intro-status-message-id
        :content-type content-type-status
        :timestamp    (or timestamp (time/now-ms))})))
 

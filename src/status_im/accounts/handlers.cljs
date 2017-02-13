@@ -58,6 +58,7 @@
 (register-handler :create-account
   (u/side-effect!
     (fn [_ [_ password]]
+      (dispatch [:set-in [:chats console-chat-id :creating-account?] true])
       (s/execute-later #(dispatch [:account-generation-message]) 400)
       (status/create-account
         password
